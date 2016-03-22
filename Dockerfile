@@ -23,7 +23,7 @@ RUN \
     # add confluence user
     mkdir -p /home/${CONTAINER_USER} && \
     addgroup -g $CONTAINER_GID -S ${CONTAINER_GROUP} && \
-    adduser -u $CONTAINER_UID  -S -D -G ${CONTAINER_GROUP} -h /home/${CONTAINER_USER} -s /sbin/nologin ${CONTAINER_USER} && \
+    adduser -u $CONTAINER_UID  -S -D -G ${CONTAINER_GROUP} -h /home/${CONTAINER_USER} -s /bin/sh ${CONTAINER_USER} && \
     chown -R ${CONTAINER_USER}:${CONTAINER_GROUP} /home/${CONTAINER_USER} && \
 
     # create confluence structure
@@ -63,5 +63,5 @@ VOLUME ["/var/atlassian/confluence"]
 # Set the default working directory as the Confluence home directory.
 WORKDIR ${CONF_HOME}
 
-CMD ["/opt/atlassian/confluence/bin/start-confluence.sh -fg"]
+CMD ["su", "-m", "confluence", "-c", "/opt/atlassian/confluence/bin/catalina.sh run"]
 
