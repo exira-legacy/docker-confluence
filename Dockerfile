@@ -52,6 +52,9 @@ RUN \
     rm -rf /tmp/* && \
     rm -rf /var/log/*
 
+# Prefer ipv4, comment if you want to bind to ipv6
+ENV CATALINA_OPTS="-Djava.net.preferIPv4Stack=true"
+
 # Expose default HTTP connector port.
 EXPOSE 8090
 
